@@ -1,12 +1,11 @@
 # API Dictionnaire Wiktionnaire
 
 <p align="right"><img src="https://img.shields.io/badge/KoPaTiK-Agency-blue"><p align="right">
-
 API qui permet d'obtenir, via le [Wiktionnaire](https://fr.wiktionary.org), la définition des termes passés en input.
 
 ![Exemple de définition](assets/img/exemple-def.jpg "Exemple de définition obtenue")
 
-## Demo
+## *** Demo ***
 
 Page de test [ici](https://api-definition.fgainza.fr)
 
