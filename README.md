@@ -5,11 +5,11 @@
 API qui permet d'obtenir, via le [Wiktionnaire](https://fr.wiktionary.org), la définition des termes passés en input.
 
 
-![Exemple de définition](assets/img/exemple-def.jpg "Exemple de définition obtenue")
+![Exemple de définition](assets/img/exemple-def.jpg "Exemple de définition obtenue")  
 
 ## *** Demo ***
 
-Page de test [ici](https://api-definition.fgainza.fr)
+Page de test [ici](https://api-definition.fgainza.fr)  
 
 
 ## *** Features ***
@@ -64,7 +64,7 @@ Plus précisément, les éléments extraits sont les suivants :
     ]
   ]
 }
-```
+```  
 
 
 ## *** Suppléments ***
@@ -77,7 +77,7 @@ Plus précisément, les éléments extraits sont les suivants :
 Cela permet d'éviter d'avoir pour seule définition "Pluriel de ..." ou "3eme personne du singulier du verbe ..."
 
 
-![Exemple de définition](assets/img/exemple-pluriel.jpg "Exemple de double définition")
+![Exemple de définition](assets/img/exemple-pluriel.jpg "Exemple de double définition")  
 
 
 
@@ -85,12 +85,12 @@ Cela permet d'éviter d'avoir pour seule définition "Pluriel de ..." ou "3eme p
 
 * Bootstrap
 * PHP avec bibliothèque "simple_html_dom"
-* Ajax JQuery 
+* Ajax JQuery   
 
 
 ## *** Auteur ***
 
-* **Frédéric Gainza** _alias_ [@FredGainza](https://github.com/FredGainza)
+* **Frédéric Gainza** _alias_ [@FredGainza](https://github.com/FredGainza)  
 
 
 ## *** License ***
