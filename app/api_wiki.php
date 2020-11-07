@@ -51,7 +51,7 @@ if(isset($_POST['motWiki']) && $_POST['motWiki'] != ''){
     $motWiki = valid_donnees($motWikiTemp);
 
 
-    /* #############################################################################################
+    /* ############################################################################################# */
     // Définir et Initialiser les variables
     $url = '';                  // url Wikitionary du mot recherché
     $error= '';                 // msg erreur renvoyé à l'utilisateur
@@ -63,7 +63,7 @@ if(isset($_POST['motWiki']) && $_POST['motWiki'] != ''){
     $nbNaturesGram = 0;         // Nb de natures grammaticales
     $resFin = [];               // tableau de résultat temp (résultat pour une classe grammaticale) 
     $genre = [];                // tableau de genre pour la classe "nom commun"
-    */ ###############################################################################################
+    /* ############################################################################################### */
    
     // Messsage si pas de page Wikitionnaire
     if (IFilesExists("https://fr.wiktionary.org/wiki/".$motWiki)){
