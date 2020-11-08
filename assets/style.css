@@ -1155,6 +1155,7 @@ figure.imgbox {
   float: left;
   margin-left: 10px;
   margin-bottom: 0;
+  width: 100%;
 }
 
 figure.imgbox figcaption p {
