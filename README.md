@@ -14,7 +14,7 @@ Page de test [ici](https://api-definition.fgainza.fr)
 
 ## *** Features ***
 
-Plus précisément, les éléments extraits sont les suivants :
+Les éléments extraits sont :
 
 * l'url de la page web
 * l'url de l'image
