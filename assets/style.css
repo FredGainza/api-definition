@@ -1155,7 +1155,6 @@ figure.imgbox {
   float: left;
   margin-left: 10px;
   margin-bottom: 0;
-  width: 100%;
 }
 
 figure.imgbox figcaption p {
@@ -1285,7 +1284,6 @@ figure.imgbox:hover {
 #btnEnvoiForm-lg.btn-info:focus {
   cursor: pointer;
   box-shadow: none !important;
-
 }
 
 #btnEnvoiForm.btn-info:active,

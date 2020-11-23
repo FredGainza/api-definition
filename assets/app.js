@@ -6,6 +6,9 @@ jQuery(document).ready(function ($) {
         document.getElementById("motInput").focus();
     }
 
+    // Désactiver autocomplete au formulaire    
+    $('#formSaisie').attr('autocomplete', 'off');
+
     // Reset formulaire page index au load de la page
     window.onload = function () {
         let formSaisie = document.getElementById("formSaisie");
@@ -123,7 +126,7 @@ jQuery(document).ready(function ($) {
                                     $resultat.url_img +
                                     '" target="_blank"><img src="' +
                                     $resultat.url_img +
-                                    '" class="img-fluid max-img-height" alt="Illustration du terme ' +
+                                    '" class="img-fluid" alt="Illustration du terme ' +
                                     $resultat.motWiki +
                                     ' Responsive Image"></a>' +
                                     "<figcaption><p>" +
@@ -195,8 +198,7 @@ jQuery(document).ready(function ($) {
 
                             $("#defsWikiAff").html($defs);
                             
-                            
-                            // Affichage du lien vers la page du Wiktionnaire du terme défini
+
                             if($resultat.direct_link != ''){
                                 $('#linkPageWiki').html('<div class="text-right"><em><a class="fz80-90i small text-right" href="' +
                                     $resultat.direct_link +
