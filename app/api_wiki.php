@@ -100,65 +100,81 @@ if(isset($_POST['motWiki']) && $_POST['motWiki'] != ''){
             }
 
             // s'il y a une image
-            if(null!=$html->find('a.image',0)){
-                // On récupère l'url du creditial 
-                if(null != $html->find('div.thumbinner', 0)){
-                    if(null != $html->find('div.thumbinner', 0)->find('a.image', 0)){
-                        if(null != $html->find('div.thumbinner', 0)->find('a.image', 0)->getAttribute('href')){
-                            $image=$html->find('div.thumbinner', 0)->find('a.image', 0)->getAttribute('href');
-                            $imageTab = mb_str_split($image);
-                            $imageSousTab = array_slice($imageTab, 5);
-                            $imageSousStrTemp = join($imageSousTab);
-                            $imageSousStr=str_replace('Fichier', 'File', $imageSousStrTemp);
-                            $url_credits = "https://commons.wikimedia.org/wiki".$imageSousStr."?uselang=fr";
-                        }
+            if (null != $html->find('figure[typeof="mw:File/Thumb"]', 0)) {
+                // On récupère l'url du creditial
+                if (null != $html->find('figure[typeof="mw:File/Thumb"]', 0)->find('a.mw-file-description', 0)) {
+                    $href = $html->find('figure[typeof="mw:File/Thumb"]', 0)->find('a.mw-file-description', 0)->getAttribute('href');
+                    if ($href) {
+                        $imageTab = mb_str_split($href);
+                        $imageSousTab = array_slice($imageTab, 5);
+                        $imageSousStrTemp = join($imageSousTab);
+                        $imageSousStr = str_replace('Fichier', 'File', $imageSousStrTemp);
+                        $url_credits = "https://commons.wikimedia.org/wiki" . $imageSousStr . "?uselang=fr";
                     }
                 }
 
                 // On récupère l'url de l'image
-                if(null != $html->find('img.thumbimage', 0)){
-                    if(null != $html->find('img.thumbimage', 0)->getAttribute('srcset')){
-                        $imageSrc=$html->find('img.thumbimage', 0)->getAttribute('srcset');
-                        $ext=['.JPG', '.jpg', '.PNG', '.png', '.gif', '.GIF', '.tif', '.TIF', '.bmp', '.BMP', '.svg',  '.SVG'];
-                        foreach($ext as $v){
-                            $imageSrcExp = explode($v, $imageSrc);
-                            if(isset($imageSrcExp[1])){
-                                $slugSrc = "https:".$imageSrcExp[0].$v;
-                                $url_img=str_replace('/thumb', '', $slugSrc);
+                if (null != $html->find('figure[typeof="mw:File/Thumb"]', 0)->find('img.mw-file-element', 0)) {
+                    $img = $html->find('figure[typeof="mw:File/Thumb"]', 0)->find('img.mw-file-element', 0);
+                    if ($img->getAttribute('srcset')) {
+                        $imageSrc = $img->getAttribute('srcset');
+                        // On prend la version 2x de l'image (plus haute qualité)
+                        $srcsetParts = explode(', ', $imageSrc);
+                        foreach ($srcsetParts as $part) {
+                            if (strpos($part, '2x') !== false) {
+                                $url_temp = explode(' ', $part)[0];
+                                $url_img = "https:" . $url_temp;
+                                break;
                             }
                         }
+                    } else {
+                        // Fallback sur src si srcset n'existe pas
+                        $url_img = "https:" . $img->getAttribute('src');
                     }
                 }
 
-                // On récupère la légende de l'image
-                if(null != $url_credits){
+                // On récupère la légende en français directement depuis le Wiktionnaire
+                $legende_img = '';
+                if (null != $html->find('figure[typeof="mw:File/Thumb"]', 0)->find('figcaption', 0)) {
+                    $legende = $html->find('figure[typeof="mw:File/Thumb"]', 0)->find('figcaption', 0)->plaintext;
+                    $legende_img = strip_tags($legende);
+                    
+                    // Enlever tous les (i) où i est un chiffre, peu importe leur position
+                    $legende_img = preg_replace('/\s*\([0-9]+\)/', '', $legende_img);
+                    
+                    // Nettoyer les espaces multiples qui pourraient rester
+                    $legende_img = preg_replace('/\s+/', ' ', trim($legende_img));
+                }
+
+                // On récupère les informations de crédit
+                $credits_img = '';
+                if (isset($url_credits)) {
                     $html2 = new simple_html_dom();
                     $html2->load_file($url_credits);
                     $test = $html2->find('table', 0);
                     $test2 = $html2->find('table', 1);
-                    if(count($test->find('tr')) > 3){
+                    if ($test && count($test->find('tr')) > 3) {
                         $tt = $test;
-                    }else if(count($test2->find('tr')) > 3){
-                            $tt = $test2;
-                    }else{
-                        $tt='';
+                    } else if ($test2 && count($test2->find('tr')) > 3) {
+                        $tt = $test2;
+                    } else {
+                        $tt = '';
                     }
-                    if($tt != ''){
-                        foreach($tt->find('tr') as $k => $tr){
-                            if($tr->find('td[id=fileinfotpl_desc]',0) ){
-                                if($tr->find('td.description', 0)){
-                                    $temp=$tr->find('td.description', 0)->plaintext;
-                                    $legendeSlug=strip_tags($temp);
+                    if ($tt != '') {
+                        foreach ($tt->find('tr') as $k => $tr) {
+                            if ($tr->find('td[id=fileinfotpl_desc]', 0)) {
+                                if ($tr->find('td.description', 0)) {
+                                    $temp = $tr->find('td.description', 0)->plaintext;
+                                    $legendeSlug = strip_tags($temp);
                                     $legendNbCar = mb_strlen($legendeSlug);
-                                    ($legendNbCar > 4 && $legendNbCar < 120) ? $legende_img = strip_tags($temp) : $legende_img = '';
+                                    if ($legendNbCar > 4 && $legendNbCar < 120) {
+                                        $credits_img = strip_tags($temp);
+                                    }
                                 }
-
                             }
                         }
-                    }                      
-
+                    }
                 }
-
             }
 
 
