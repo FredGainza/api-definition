@@ -1152,14 +1152,13 @@ a.link-perso:hover {
 
 figure.imgbox {
   border: 1px solid black;
-  float: left;
   margin-left: 10px;
   margin-bottom: 0;
 }
 
 figure.imgbox figcaption p {
   text-align: center;
-  font-size: 1rem;
+  font-size: .9rem;
   margin: 0.25rem 0 !important;
 }
 
